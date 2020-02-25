@@ -3,7 +3,6 @@ const router = express.Router();
 
 // Home route
 router.get('/', (req, res) => {
-    // debug("debugging");
     res.send("<h1> Welcome to Mov! </h1>");
 });
 

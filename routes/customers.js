@@ -1,22 +1,6 @@
-const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
-const Joi = require('joi');
-const debug = require('debug')('app:work');
-
-const Customer = mongoose.model('customer', mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    minlength: 3,
-    maxlength: 30
-  },
-  isGold: { type: Boolean, default: false},
-  phone: {
-    type: Number,
-    required: true
-  }
-}));
+const { Customer, validate } = require('../models/customer');
 
 router.get('/', async (req, res) => {
   const customers = await Customer.find();
@@ -35,7 +19,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { error } = ValidateCust(req.body);
+  const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   let customer = new Customer({
@@ -58,7 +42,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-  const { error } = ValidateCust(req.body);
+  const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   const cust = await Customer.findOneAndUpdate(req.params.id, {
@@ -71,15 +55,5 @@ router.put('/:id', async (req, res) => {
 
   res.send(cust);
 });
-
-function ValidateCust(customer)
-{
-  const Schema = {
-    name: Joi.string().min(3).max(30).required(),
-    isGold: Joi.bool(),
-    phone: Joi.number().required()
-  };
-  return Joi.validate(customer, Schema);
-}
 
 module.exports = router;
