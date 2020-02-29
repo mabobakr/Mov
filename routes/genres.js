@@ -6,7 +6,7 @@ const { Genre, validate } = require('../models/genre');
 // Returns all the genres 
 router.get('/', async (req, res) => {
   const genres = await Genre.find()  
-  
+
   if (!genres) return res.status(404).send('No Genres are found');
 
   res.send(genres);
@@ -30,7 +30,6 @@ router.post('/', async (req, res) => {
   let genre = new Genre({name: req.body.name });
   
   genre = await genre.save();
-  
   res.send(genre);
 })
 

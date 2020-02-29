@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-
+const winston = require('winston');
 
 // connecting to the database
 module.exports = function()
 {
   mongoose.connect('mongodb://localhost/mov')
-  .then(()=> { console.log('okay ready to do it')});
+  .then(()=> { winston.info('Connected to the db')});
 }
