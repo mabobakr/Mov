@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
   
   const result = await bcrypt.compare(req.body.password, user.password);
   if (!result) return res.status(400).send('Invalid email or password');
-
+	
   res.send('okay u r authenticated');
 
 });
