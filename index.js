@@ -3,10 +3,12 @@ const express = require("express");
 require("express-async-errors");
 const app = express();
 const winston = require("winston");
+const config = require("config");
+
+// Call start up functions
 require("./startup/dbconnect")();
 require("./startup/routes")(app);
 require("./startup/error")();
-const config = require("config");
 
 if (!config.get("jwtPrivateKey")) {
   winston.error("FATAL ERROR!!: jwtPrivateKey is not defined.");
