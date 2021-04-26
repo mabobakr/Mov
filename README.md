@@ -1,3 +1,3 @@
 # Mov
 
-A Movie rental Back-end built using Express framework and MongoDB
+A Movie rental website Back-end built using Express framework and MongoDB
